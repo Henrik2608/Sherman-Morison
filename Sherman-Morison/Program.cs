@@ -4,17 +4,33 @@ class ShermanMorrison
 {
     static void Main()
     {
-        
-        double[,] Ainv =
-        {
-            { -4, -1, 0,0 },
-            { -1, -4, 0,0 },
-            { 0, 0, -4, -1 },
-            {0, 0, -1,-4 },
-        };
 
-        double[] u = { 0, 1, 0 ,0 };
-        double[] v = { 0, 0,1, 0 };
+        Console.Write("Matrix size (n): ");
+        int n = int.Parse(Console.ReadLine());
+
+        double[,] Ainv = new double[n, n];
+        double[] u = new double[n];
+        double[] v = new double[n];
+
+        Console.WriteLine("Enter matrix A^{-1} row by row ");
+
+        for (int i = 0; i < n; i++)
+        {
+            string[] row = Console.ReadLine().Split(' ');
+
+            for (int j = 0; j < n; j++)
+                Ainv[i, j] = double.Parse(row[j]);
+        }
+
+        Console.WriteLine("Enter vector u ");
+        string[] u_input = Console.ReadLine().Split(' ');
+        for (int i = 0; i < n; i++)
+            u[i] = double.Parse(u_input[i]);
+
+        Console.WriteLine("Enter vector v ");
+        string[] v_input = Console.ReadLine().Split(' ');
+        for (int i = 0; i < n; i++)
+            v[i] = double.Parse(v_input[i]);
 
         double[,] updated = ShermanMorrisonUpdate(Ainv, u, v);
 
@@ -38,7 +54,7 @@ class ShermanMorrison
         if (Math.Abs(1 + lambda) < 1e-10)
             throw new Exception("Matrix becomes singular.");
 
-        
+
         double[,] result = new double[n, n];
 
         for (int i = 0; i < n; i++)
