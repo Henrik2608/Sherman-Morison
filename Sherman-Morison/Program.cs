@@ -16,21 +16,80 @@ class ShermanMorrison
 
         for (int i = 0; i < n; i++)
         {
-            string[] row = Console.ReadLine().Split(' ');
+            while (true)
+            {
+                string[] row = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-            for (int j = 0; j < n; j++)
-                Ainv[i, j] = double.Parse(row[j]);
+                if (row.Length != n)
+                {
+                    Console.WriteLine($"Error: You must enter exactly {n} numbers. Try again:");
+                    continue;
+                }
+
+                try
+                {
+                    for (int j = 0; j < n; j++)
+                        Ainv[i, j] = double.Parse(row[j]);
+
+                    break;
+                }
+                catch
+                {
+                    Console.WriteLine("Error: Invalid number format. Try again:");
+                }
+            }
         }
 
-        Console.WriteLine("Enter vector u ");
-        string[] u_input = Console.ReadLine().Split(' ');
-        for (int i = 0; i < n; i++)
-            u[i] = double.Parse(u_input[i]);
+        Console.WriteLine("Enter vector u (space separated):");
 
-        Console.WriteLine("Enter vector v ");
-        string[] v_input = Console.ReadLine().Split(' ');
-        for (int i = 0; i < n; i++)
-            v[i] = double.Parse(v_input[i]);
+        while (true)
+        {
+            string[] input = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            if (input.Length != n)
+            {
+                Console.WriteLine($"Error: You must enter exactly {n} numbers. Try again:");
+                continue;
+            }
+
+            try
+            {
+                for (int i = 0; i < n; i++)
+                    u[i] = double.Parse(input[i]);
+
+                break;
+            }
+            catch
+            {
+                Console.WriteLine("Error: Invalid number format. Try again:");
+            }
+        }
+
+        Console.WriteLine("Enter vector v (space separated):");
+
+        while (true)
+        {
+            string[] input = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            if (input.Length != n)
+            {
+                Console.WriteLine($"Error: You must enter exactly {n} numbers. Try again:");
+                continue;
+            }
+
+            try
+            {
+                for (int i = 0; i < n; i++)
+                    v[i] = double.Parse(input[i]);
+
+                break;
+            }
+            catch
+            {
+                Console.WriteLine("Error: Invalid number format. Try again:");
+            }
+        }
+
 
         double[,] updated = ShermanMorrisonUpdate(Ainv, u, v);
 
